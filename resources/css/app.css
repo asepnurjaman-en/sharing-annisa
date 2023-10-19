@@ -1,0 +1,14 @@
+@import url('./argon/argon-dashboard.css');
+
+@import url('~choicesjs/public/assets/styles/choices');
+@import url('~dropzone/dist/dropzone.css');
+
+
+/* re apply */
+.choices__inner {
+    background-color: unset!important;
+    border-radius: .5em!important;
+    padding: 0.5rem 0.75rem!important;
+    min-height: unset!important; }
+.choices__list--single {
+    padding: 0!important; }
