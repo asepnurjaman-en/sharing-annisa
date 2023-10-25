@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Student extends Model
+class MeetingParticipant extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -22,13 +21,13 @@ class Student extends Model
         });
     }
 
-    public function school() : BelongsTo
+    public function meeting() : BelongsTo
     {
-        return $this->belongsTo(School::class, 'school_id');
+        return $this->belongsTo(Meeting::class, 'meeting_id');
     }
 
-    public function meeting() : HasMany
+    public function student() : BelongsTo
     {
-        return $this->hasMany(MeetingParticipant::class, 'student_id');
+        return $this->belongsTo(Student::class, 'student_id');
     }
 }

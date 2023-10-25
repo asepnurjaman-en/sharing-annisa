@@ -1,26 +1,29 @@
 import React, { useState } from "react";
-import Layout from "../../Layouts/Default";
+import Layout from "../../../Layouts/Default";
 import { Inertia } from "@inertiajs/inertia";
 import { Link, Head } from "@inertiajs/inertia-react";
 import { FiUsers, FiPlus, FiSave } from "react-icons/fi";
+import flatpickr from "flatpickr";
 
-export default function SchoolIndex({ schools, session, errors, current_route }) {
+export default function SchoolIndex({ meetings, session, errors, current_route }) {
 	const breadcrumb = [
 		{
-			url: `/home`,
+			url: `/dashboard`,
 			text: `Dashboard`
 		},
 		{
 			url: `#`,
-			text: `Schools`
+			text: `Meeting`
 		}
 	];
 	const [name, setName] = useState('');
+	const [periods, setPeriods] = useState('');
 	const storeSchool = async (e) => {
 		e.preventDefault();
 		let submit = document.querySelector('button[type=submit]');
-		Inertia.post('/schools', {
+		Inertia.post('/admin/meetings', {
 			name: name,
+			periods: periods,
 		},{
 			onProgress: () => {
 				submit.disabled = true;
@@ -33,6 +36,12 @@ export default function SchoolIndex({ schools, session, errors, current_route })
 			}
 		});
 	};
+
+    React.useEffect(() => {
+		flatpickr(".form-flatpickr", {
+			mode: "range"
+		});
+	}, []);
 
 	return (
 		<>
@@ -55,7 +64,7 @@ export default function SchoolIndex({ schools, session, errors, current_route })
 									) }
 									<Link type="button" className="d-flex d-lg-inline-flex align-items-center btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#createModal">
 										<FiPlus className="me-1"/>
-										<span>Add new school</span>
+										<span>Add new meeting</span>
 									</Link>
 								</div>
 								<div className="card-body px-0 pt-0 pb-2">
@@ -63,33 +72,33 @@ export default function SchoolIndex({ schools, session, errors, current_route })
 										<table className="table align-items-center mb-0">
 											<thead>
 												<tr>
-													<th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">School name</th>
+													<th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Meeting name</th>
 													<th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Participants</th>
 												</tr>
 											</thead>
 											<tbody>
-												{ (schools.length) ? schools.map((item, index) => (
+												{ (meetings.length) ? meetings.map((item, index) => (
 												<tr key={ index }>
 													<td>
 														<div className="px-3 py-1">
-															<h6 className="text-sm mb-0">{ item.name }</h6>
+															<h6 className="text-sm mb-1"><span className="text-warning text-normal">[{item.formatted_start}]</span> { item.name }</h6>
 															<div className="d-flex gap-2">
-																<Link href={`/schools/${item.id}/edit`} className="fw-bold text-primary text-xs" data-bs-toggle="tooltip" title="Edit school">
+																<Link href={`/admin/meetings/${item.id}/edit`} className="fw-bold text-primary text-xs" data-bs-toggle="tooltip" title="Edit meeting">
 																	Edit
 																</Link>
 															</div>
 														</div>
 													</td>
 													<td className="align-middle text-sm">
-														<Link href={`/schools/${item.id}`} className="d-inline-flex align-items-base btn bg-gradient-default text-xs" data-bs-toggle="tooltip" title="Manage students">
+														<Link href={`/admin/meetings/${item.id}`} className="d-inline-flex align-items-base btn bg-gradient-default text-xs" data-bs-toggle="tooltip" title="Manage meeting">
 															<FiUsers className="me-1"/>
-															<span className="d-none d-lg-inline">Manage students</span>
+															<span className="d-none d-lg-inline">Manage meeting</span>
 														</Link>
 													</td>
 												</tr>
 												)) : 
 												<tr>
-													<td colSpan={2} className="text-center opacity-5 py-4">No school</td>
+													<td colSpan={2} className="text-center opacity-5 py-4">No meeting</td>
 												</tr> }
 											</tbody>
 										</table>
@@ -105,7 +114,7 @@ export default function SchoolIndex({ schools, session, errors, current_route })
 						<div className="modal-content">
 							<div className="modal-header align-items-center">
 								<h5 className="modal-title" id="createModalLabel">
-									Add new school
+									Add new meeting
 								</h5>
 								<button type="button" className="btn bg-gradient-default text-danger mb-0" id="createModalClose" data-bs-dismiss="modal">&times;</button>
 							</div>
@@ -113,15 +122,26 @@ export default function SchoolIndex({ schools, session, errors, current_route })
 								<div className="modal-body">
 									<div className="form-group">
 										<label htmlFor="name" className="form-control-label">
-											School name
+                                            Meeting name
 											{errors.name && (
 												<b className={`text-danger ms-1`}>
 													{errors.name}
 												</b>
 											)}
 										</label>
-										<input type="text" className={`form-control ` + (errors.name && (`is-invalid`))} placeholder="School name" onChange={(e) => setName(e.target.value)}/>
+										<input type="text" className={`form-control ` + (errors.name && (`is-invalid`))} placeholder="Meeting name" onChange={(e) => setName(e.target.value)}/>
 									</div>
+                                    <div className="form-group">
+                                        <label htmlFor="periods" className="form-control-label">
+                                            Period
+                                            {errors.periods && (
+                                                <b className={`text-danger ms-1`}>
+                                                    {errors.periods}
+                                                </b>
+                                            )}
+                                        </label>
+                                        <input className={`form-control form-flatpickr ` + (errors.periods && (`is-invalid`))} placeholder="Please select periode" type="text" onFocus={(e) => setPeriods(e.target.value)}/>
+                                    </div>
 								</div>
 								<div className="modal-footer">
 									<button type="submit" className="btn bg-gradient-primary w-100 w-lg-auto">

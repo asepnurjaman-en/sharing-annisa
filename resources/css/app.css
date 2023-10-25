@@ -4,6 +4,10 @@
 @import url('~dropzone/dist/dropzone.css');
 
 
+.object-cover {
+    object-fit: cover;
+    -o-object-fit: cover; }
+
 /* re apply */
 .choices__inner {
     background-color: unset!important;

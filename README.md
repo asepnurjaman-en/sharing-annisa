@@ -1,11 +1,11 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" height="100" alt="Laravel Logo"><img src="https://raw.githubusercontent.com/innocenzi/awesome-inertiajs/main/assets/logo.svg" height="100" alt="Inertia Logo"></p>
 
-## Sharing Annisa
+## Meeting Manager
 
 Website using for manage meeting schedule.
 
-- Laravel 10.
-- InertiaJs.
+- Laravel v10.28.0 (PHP v8.1.16)
+- [Inertiajs v0.6.10](https://inertiajs.com/)
 - React 17.0.2
 
 ## Learning Laravel

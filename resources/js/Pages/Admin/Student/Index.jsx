@@ -1,12 +1,12 @@
 import React from "react";
-import Layout from "../../Layouts/Default";
+import Layout from "../../../Layouts/Default";
 import { Link, Head } from "@inertiajs/inertia-react";
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiUser, FiUserPlus } from "react-icons/fi";
 
 export default function StudentIndex({ students, session, current_route }) {
 	const breadcrumb = [
 		{
-			url: `/home`,
+			url: `/dashboard`,
 			text: `Dashboard`
 		},
 		{
@@ -14,6 +14,7 @@ export default function StudentIndex({ students, session, current_route }) {
 			text: `Students`
 		}
 	];
+
 	return (
 		<>
 			<Head>
@@ -33,7 +34,7 @@ export default function StudentIndex({ students, session, current_route }) {
 											</button>
 										</div>
 									) }
-									<Link href={'/students/create'} className="d-flex d-lg-inline-flex align-items-center btn bg-gradient-warning me-2">
+									<Link href={`/admin/students/create`} className="d-flex d-lg-inline-flex align-items-center btn bg-gradient-warning me-2">
 										<FiPlus className="me-1"/>
 										Add new student
 									</Link>
@@ -44,7 +45,7 @@ export default function StudentIndex({ students, session, current_route }) {
 											<thead>
 												<tr>
 													<th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student name</th>
-													<th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Participant active</th>
+													<th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"></th>
 												</tr>
 											</thead>
 											<tbody>
@@ -54,13 +55,27 @@ export default function StudentIndex({ students, session, current_route }) {
 														<div className="px-3 py-1">
 															<h6 className="text-sm mb-0">{ item.name }</h6>
 															<div className="d-flex gap-2">
-																<Link href={`/students/${item.id}/edit`} className="fw-bold text-primary text-xs" data-bs-toggle="tooltip" title="Edit student">
+																<Link href={`/admin/students/${item.id}/edit`} className="fw-bold text-primary text-xs" data-bs-toggle="tooltip" title="Edit student">
 																	Edit
 																</Link>
 															</div>
 														</div>
 													</td>
-													<td className="align-middle text-sm">{item.school.name}</td>
+													<td className="align-middle text-sm">
+														{(function() {
+															if (item.account_id) {
+																return <Link href={`/admin/students/${item.account_id}/edit-account`} className="d-inline-flex align-items-base btn bg-gradient-default text-xs" data-bs-toggle="tooltip" title="Manage account">
+																			<FiUser className="me-1"/>
+																			<span className="d-none d-lg-inline">Manage account</span>
+																		</Link>;
+															} else {
+																return <Link href={`/admin/students/${item.id}/create-account`} className="d-inline-flex align-items-base btn bg-gradient-success text-xs" data-bs-toggle="tooltip" title="Manage account">
+																			<FiUserPlus className="me-1"/>
+																			<span className="d-none d-lg-inline">Create account</span>
+																		</Link>;
+															}
+														})()}
+													</td>
 												</tr>
 												)) :
 												<tr>

@@ -34,4 +34,19 @@ class Meeting extends Model
     {
         return $this->hasMany(MeetingSubject::class, 'meeting_id');
     }
+
+    public function participants() : HasMany
+    {
+        return $this->hasMany(MeetingParticipant::class, 'meeting_id');
+    }
+
+    public function scopeOngoing($query)
+    {
+        return $query->whereDate('start', '<=', now())->whereDate('until', '>=', now());
+    }
+
+    public function scopeUpComing($query)
+    {
+        return $query->whereDate('start', '>', now());
+    }
 }

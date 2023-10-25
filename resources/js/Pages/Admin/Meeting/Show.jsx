@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../Layouts/Default";
+import Layout from "../../../Layouts/Default";
 import { Inertia } from "@inertiajs/inertia";
 import { Link, Head } from "@inertiajs/inertia-react";
 import { FiUser, FiUsers, FiUserCheck, FiChevronLeft, FiMessageSquare, FiTrash2, FiEdit, FiHash, FiSave } from 'react-icons/fi';
@@ -12,11 +12,11 @@ import Swal from "sweetalert2";
 export default function ShowMeeting({ meeting, students, session, errors, current_route }) {
 	const breadcrumb = [
 		{
-			url: `/home`,
+			url: `/dashboard`,
 			text: `Dashboard`
 		},
 		{
-			url: `/meetings`,
+			url: `/admin/meetings`,
 			text: `Meeting`
 		},
 		{
@@ -30,7 +30,7 @@ export default function ShowMeeting({ meeting, students, session, errors, curren
 	const [stakeholder, setStakeholder] = useState('');
 	const storeActor = async (e) => {
 		e.preventDefault();
-		Inertia.post(`/meeting-actors`, {
+		Inertia.post(`/admin/meeting-actors`, {
 			meeting: meeting.id,
 			student: student,
 			stakeholder: stakeholder
@@ -43,7 +43,7 @@ export default function ShowMeeting({ meeting, students, session, errors, curren
 	};
 	const storeSubject = async (e) => {
 		e.preventDefault();
-		Inertia.post(`/meeting-subjects`, {
+		Inertia.post(`/admin/meeting-subjects`, {
 			meeting: meeting.id,
 			title: subjectTitle,
 			content: subjectContent,
@@ -70,7 +70,7 @@ export default function ShowMeeting({ meeting, students, session, errors, curren
 			allowOutsideClick: false
 		}).then((response) => {
 			if (response.isConfirmed) {
-				Inertia.delete(`/meetings/${meet.id}`);
+				Inertia.delete(`/admin/meetings/${meeting.id}`);
 			}
 		});
 	};
@@ -91,7 +91,7 @@ export default function ShowMeeting({ meeting, students, session, errors, curren
 			allowOutsideClick: false
 		}).then((response) => {
 			if (response.isConfirmed) {
-				Inertia.delete(`/meeting-actors/${id}`);
+				Inertia.delete(`/admin/meeting-actors/${id}`);
 			}
 		});
 	};
@@ -112,7 +112,7 @@ export default function ShowMeeting({ meeting, students, session, errors, curren
 			allowOutsideClick: false
 		}).then((response) => {
 			if (response.isConfirmed) {
-				Inertia.delete(`/meeting-subjects/${id}`);
+				Inertia.delete(`/admin/meeting-subjects/${id}`);
 			}
 		});
 	};
@@ -140,7 +140,7 @@ export default function ShowMeeting({ meeting, students, session, errors, curren
 								</div>
 							) }
 							<div className="d-flex gap-3">
-								<Link href={`/meetings`} className="btn bg-gradient-default d-none d-lg-inline-flex align-items-center mb-0">
+								<Link href={`/admin/meetings`} className="btn bg-gradient-default d-none d-lg-inline-flex align-items-center mb-0">
 									<FiChevronLeft className="me-1" />
 									<span>Back</span>
 								</Link>
@@ -292,7 +292,7 @@ export default function ShowMeeting({ meeting, students, session, errors, curren
 										</div>
 										<div className="d-flex flex-column">
 											<span className="text-xs">Change meeting name.</span>
-											<Link href={`/meetings/${meeting.id}/edit`} className="text-primary fw-bold">Edit meeting</Link>
+											<Link href={`/admin/meetings/${meeting.id}/edit`} className="text-primary fw-bold">Edit meeting</Link>
 										</div>
 									</div>
 								</li>

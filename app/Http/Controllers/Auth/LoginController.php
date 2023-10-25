@@ -22,7 +22,7 @@ class LoginController extends Controller
 		$credentials = $request->only('email', 'password');
 		if (Auth::attempt($credentials)) {
 			$request->session()->regenerate();
-			return redirect('/home');
+			return redirect()->route('dashboard.index');
 		}
 		
 		return back()->withErrors([
@@ -34,6 +34,6 @@ class LoginController extends Controller
 	{
 		auth()->logout();
 
-		return redirect('/login');
+		return redirect()->route('login');
 	}
 }

@@ -1,16 +1,16 @@
 import React from 'react';
-import Layout from '../../Layouts/Default';
+import Layout from '../../../Layouts/Default';
 import { Link, Head } from '@inertiajs/inertia-react';
 import { FiChevronLeft } from 'react-icons/fi';
 
 export default function ShowSchool({ students, school, current_route }) {
 	const breadcrumb = [
 		{
-			url: `/home`,
+			url: `/dashboard`,
 			text: `Dashboard`
 		},
 		{
-			url: `/schools`,
+			url: `/admin/schools`,
 			text: `Schools`
 		},
 		{
@@ -79,7 +79,7 @@ export default function ShowSchool({ students, school, current_route }) {
 					<div className="card mb-4">
 						<div className="card-header pb-0">
 							<div className="d-flex gap-3">
-								<Link href={`/schools`} className="btn bg-gradient-default d-none d-lg-inline-flex align-items-center mb-0">
+								<Link href={`/admin/schools`} className="btn bg-gradient-default d-none d-lg-inline-flex align-items-center mb-0">
 									<FiChevronLeft className="me-1" />
 									<span>Back</span>
 								</Link>
@@ -128,7 +128,7 @@ export default function ShowSchool({ students, school, current_route }) {
 																	<h6 className="mb-1 text-sm">
 																		{ item.student.name }
 																	</h6>
-																	<Link href={`/students/${item.student.id}/edit`} className="fw-bold text-primary text-xs" data-bs-toggle="tooltip" title="Edit student">
+																	<Link href={`/admin/students/${item.student.id}/edit`} className="fw-bold text-primary text-xs" data-bs-toggle="tooltip" title="Edit student">
 																		Edit
 																	</Link>
 																</div>
@@ -166,7 +166,7 @@ export default function ShowSchool({ students, school, current_route }) {
 																	<h6 className="mb-1 text-sm">
 																		{ item.student.name }
 																	</h6>
-																	<Link href={`/students/${item.student.id}/edit`} className="fw-bold text-primary text-xs" data-bs-toggle="tooltip" title="Edit student">
+																	<Link href={`/admin/students/${item.student.id}/edit`} className="fw-bold text-primary text-xs" data-bs-toggle="tooltip" title="Edit student">
 																		Edit
 																	</Link>
 																</div>
@@ -204,7 +204,7 @@ export default function ShowSchool({ students, school, current_route }) {
 																	<h6 className="mb-1 text-sm">
 																		{ item.student.name }
 																	</h6>
-																	<Link href={`/students/${item.student.id}/edit`} className="fw-bold text-primary text-xs" data-bs-toggle="tooltip" title="Edit student">
+																	<Link href={`/admin/students/${item.student.id}/edit`} className="fw-bold text-primary text-xs" data-bs-toggle="tooltip" title="Edit student">
 																		Edit
 																	</Link>
 																</div>

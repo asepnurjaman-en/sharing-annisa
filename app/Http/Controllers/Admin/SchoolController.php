@@ -17,7 +17,7 @@ class SchoolController extends Controller
     {
         $schools = School::withCount('students')->latest()->get();
 
-        return inertia('School/Index', [
+        return inertia('Admin/School/Index', [
             'schools' => $schools,
             'current_route' => Route::currentRouteName()
         ]);
@@ -84,7 +84,7 @@ class SchoolController extends Controller
             unset($student_scheduled->start, $student_scheduled->departure);
         });
 
-        return inertia('School/Show', [
+        return inertia('Admin/School/Show', [
             'school' => $school,
             'students' => [
                 'active' => $students_active,
@@ -103,7 +103,7 @@ class SchoolController extends Controller
         $school = School::find($id);
         $school->formatted_date = $school->created_at->isoFormat('dddd, D MMMM Y');
 
-        return inertia('School/Edit', [
+        return inertia('Admin/School/Edit', [
             'school' => $school,
             'current_route' => Route::currentRouteName()
         ]);

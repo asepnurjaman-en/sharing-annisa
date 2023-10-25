@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Layout from '../../Layouts/Default';
+import Layout from '../../../Layouts/Default';
 import { Inertia } from '@inertiajs/inertia';
 import { Link, Head } from '@inertiajs/inertia-react';
 import { FiChevronLeft, FiSave } from "react-icons/fi";
@@ -8,11 +8,11 @@ import flatpickr from "flatpickr";
 export default function EditSchool({ meeting, errors, current_route }) {
 	const breadcrumb = [
 		{
-			url: `/home`,
+			url: `/dashboard`,
 			text: `Dashboard`
 		},
         {
-			url: `/meetings`,
+			url: `/admin/meetings`,
 			text: `Meetings`
 		},
 		{
@@ -26,7 +26,7 @@ export default function EditSchool({ meeting, errors, current_route }) {
 	const updateMeeting = async (e) => {
 		e.preventDefault();
 		let submit = document.querySelector('button[type=submit]');
-		Inertia.put(`/meetings/${meeting.id}`, {
+		Inertia.put(`/admin/meetings/${meeting.id}`, {
 			name: name,
 			start: start,
 			until: until
@@ -58,7 +58,7 @@ export default function EditSchool({ meeting, errors, current_route }) {
 								<form onSubmit={updateMeeting}>
 									<div className="card-header pb-0">
 										<div className="d-flex gap-3">
-											<Link href="/meetings/" className="btn bg-gradient-default d-none d-lg-inline-flex align-items-center mb-0">
+											<Link href="/admin/meetings/" className="btn bg-gradient-default d-none d-lg-inline-flex align-items-center mb-0">
 												<FiChevronLeft className="me-1" />
 												<span>Back</span>
 											</Link>

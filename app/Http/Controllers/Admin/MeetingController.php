@@ -22,7 +22,7 @@ class MeetingController extends Controller
             unset($meeting->start);
         });
 
-        return inertia('Meeting/Index', [
+        return inertia('Admin/Meeting/Index', [
             'meetings' => $meetings,
             'current_route' => Route::currentRouteName()
         ]);
@@ -58,7 +58,7 @@ class MeetingController extends Controller
             'until' => $date_departure,
         ]);
 
-        return redirect()->route('meetings.show', $meeting->id)->with('success', 'New meeting added.');
+        return redirect()->route('meetings.index')->with('success', 'New meeting added.');
     }
 
     /**
@@ -81,7 +81,7 @@ class MeetingController extends Controller
         endif;
         $students = School::with('students')->get();
 
-        return inertia('Meeting/Show', [
+        return inertia('Admin/Meeting/Show', [
             'meeting' => $meeting,
             'students' => $students,
             'current_route' => Route::currentRouteName()
@@ -96,7 +96,7 @@ class MeetingController extends Controller
         $meeting = Meeting::find($id);
         $meeting->formatted_date = $meeting->created_at->isoFormat('dddd, D MMMM Y');
 
-        return inertia('Meeting/Edit', [
+        return inertia('Admin/Meeting/Edit', [
             'meeting' => $meeting,
             'current_route' => Route::currentRouteName()
         ]);

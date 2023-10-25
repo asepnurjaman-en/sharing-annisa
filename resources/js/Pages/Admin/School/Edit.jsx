@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Layout from '../../Layouts/Default';
+import Layout from '../../../Layouts/Default';
 import { Inertia } from '@inertiajs/inertia';
 import { Link, Head } from '@inertiajs/inertia-react';
 import { FiChevronLeft, FiSave, FiTrash2 } from "react-icons/fi";
@@ -8,11 +8,11 @@ import Swal from "sweetalert2";
 export default function EditSchool({ school, errors, current_route }) {
 	const breadcrumb = [
 		{
-			url: `/home`,
+			url: `/dashboard`,
 			text: `Dashboard`
 		},
         {
-			url: `/schools`,
+			url: `/admin/schools`,
 			text: `Schools`
 		},
 		{
@@ -24,7 +24,7 @@ export default function EditSchool({ school, errors, current_route }) {
 	const updateSchool = async (e) => {
 		e.preventDefault();
 		let submit = document.querySelector('button[type=submit]');
-		Inertia.put(`/schools/${school.id}`, {
+		Inertia.put(`/admin/schools/${school.id}`, {
 			name: name
 		}, {
 			onProgress: () => {
@@ -51,7 +51,7 @@ export default function EditSchool({ school, errors, current_route }) {
 			allowOutsideClick: false
 		}).then((response) => {
 			if (response.isConfirmed) {
-				Inertia.delete(`/schools/${id}`);
+				Inertia.delete(`/admin/schools/${id}`);
 			}
 		});
 	};
@@ -69,7 +69,7 @@ export default function EditSchool({ school, errors, current_route }) {
 								<form onSubmit={updateSchool}>
 									<div className="card-header pb-0">
 										<div className="d-flex gap-3">
-											<Link href="/schools/" className="btn bg-gradient-default d-none d-lg-inline-flex align-items-center mb-0">
+											<Link href={`/admin/schools/`} className="btn bg-gradient-default d-none d-lg-inline-flex align-items-center mb-0">
 												<FiChevronLeft className="me-1" />
 												<span>Back</span>
 											</Link>
