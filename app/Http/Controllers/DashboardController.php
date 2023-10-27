@@ -18,21 +18,32 @@ class DashboardController extends Controller
             'students' => Student::count()
         ];
         $meetings = [
-            'scheduled' => Meeting::upComing()->withCount('participants')->get(),
-            'ongoing' => Meeting::ongoing()->withCount('participants')->get(),
+            'scheduled' => Meeting::upComing()->withCount('participants'),
+            'ongoing' => Meeting::ongoing()->withCount('participants'),
         ];
-        $meetings['scheduled']->map(function ($scheduled) {
-            $scheduled->formatted_start = Carbon::parse($scheduled->start)->diffForHumans();
-            unset($scheduled->start);
-        });
         if (in_array(Auth::user()->role, ['developer', 'admin'])) :
+            $meetings['scheduled'] = $meetings['scheduled']->get();
+            $meetings['scheduled']->map(function ($scheduled) {
+                $scheduled->formatted_start = Carbon::parse($scheduled->start)->diffForHumans();
+                unset($scheduled->start);
+            });
+            $meetings['ongoing'] = $meetings['ongoing']->get();
             return inertia('Admin/Dashboard', [
                 'data' => $dashboard,
                 'meetings' => $meetings,
                 'current_route' => Route::currentRouteName()
             ]);
         elseif (in_array(Auth::user()->role, ['user'])) :
+            $meetings['scheduled'] = $meetings['scheduled']->participate()->get();
+            $meetings['scheduled']->map(function ($scheduled) {
+                $scheduled->formatted_start = Carbon::parse($scheduled->start)->diffForHumans();
+                unset($scheduled->start);
+            });
+            $meetings['ongoing'] = $meetings['ongoing']->participate()->get();
             return inertia('User/Dashboard', [
+                'profile' => Student::whereHas('account', function($query) {
+                    $query->whereId(Auth::user()->id);
+                })->first(),
                 'data' => $dashboard,
                 'meetings' => $meetings,
                 'current_route' => Route::currentRouteName()

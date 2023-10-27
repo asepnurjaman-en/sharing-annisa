@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import Layout from "../../Layouts/Default";
 import { Link, Head, usePage } from "@inertiajs/inertia-react";
 import { FiUsers, FiCast, FiChevronRight, FiRadio, FiCalendar } from "react-icons/fi";
 
-export default function DashboardIndex({ data, meetings, current_route }) {
+export default function DashboardIndex({ profile, data, meetings, current_route }) {
 	const breadcrumb = [
 		{
 			url: `#`,
@@ -130,19 +130,19 @@ export default function DashboardIndex({ data, meetings, current_route }) {
 						</div>
 						<div className="col-lg-6">
 							<div className="card card-profile">
-								<img src="/3_20230908_194000_0002.png" className="card-img-top max-height-160 object-cover"/>
+								<img src={`/storage/${profile.background_picture}`} className="card-img-top max-height-160 object-cover"/>
 								<div className="row justify-content-center">
 									<div className="col-4 col-lg-4 order-lg-2">
 										<div className="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
-											<img src="/icons/inertia.png" className="d-block icon-xl rounded-circle img-fluid border border-2 border-white m-auto"/>
+											<img src={`/storage/${profile.profile_picture}`} className="d-block icon-xl rounded-circle object-cover img-fluid border border-2 border-white m-auto"/>
 										</div>
 									</div>
 								</div>
 								<div className="card-body pt-0">
 									<div className="text-center mt-4 mb-2">
 										<h5>{auth.user.name}</h5>
-										<div className="h6 fw-light">
-											<i className="ni location_pin mr-2"></i>Bucharest, Romania
+										<div className="fw-light">
+											<Link className="btn btn-sm btn-outline-primary" href="/u/profile">My Profile</Link>
 										</div>
 										<div>
 											<i className="ni education_hat mr-2"></i>University of Computer Science

@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../../../Layouts/Default";
 import { Link, Head } from "@inertiajs/inertia-react";
-import { FiList, FiCalendar } from "react-icons/fi";
+import { FiUser, FiList, FiCalendar } from "react-icons/fi";
 import { FcRemoveImage } from "react-icons/fc";
 
 export default function SchoolMyIndex({ meetings, current_route }) {
@@ -12,7 +12,7 @@ export default function SchoolMyIndex({ meetings, current_route }) {
 		},
 		{
 			url: `#`,
-			text: `My Meetings`
+			text: `Engaged Meetings`
 		}
 	];
 
@@ -29,7 +29,7 @@ export default function SchoolMyIndex({ meetings, current_route }) {
 								{ (meetings.length) ? meetings.map((item, index) => (
 								<div key={index} className="col-12 col-lg-4">
 									<div className="card">
-										<div className="card-body">
+										<div className="card-body pb-0">
 											<div className="py-1">
 												<h5 className="mb-1">{ item.name }</h5>
 												<small>{item.formatted_coming}</small>
@@ -41,6 +41,12 @@ export default function SchoolMyIndex({ meetings, current_route }) {
 												{item.formatted_start} - {item.formatted_until}
 												</span>
 											</div>
+											{ item.actors.map((sub_item, sub_index) => (
+											<div className="d-block bg-gray-100 border rounded text-sm p-2 my-1" key={sub_index}>
+												<FiUser className="text-warning me-1"/>
+												<span>You are trusted as <b>{sub_item.stakeholder}</b></span>
+											</div>
+											)) }
 										</div>
 										<div className="d-flex gap-2 justify-content-between card-footer">
 											<Link href={`/u/meetings/${item.id}`} className="d-flex align-items-center justify-content-center btn bg-gradient-default text-xs w-100 mb-0" data-bs-toggle="tooltip" title="Detail meeting">

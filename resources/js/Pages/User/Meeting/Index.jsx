@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 export default function SchoolIndex({ meetings, current_route }) {
 	const breadcrumb = [
 		{
-			url: `/home`,
+			url: `/dashboard`,
 			text: `Dashboard`
 		},
 		{

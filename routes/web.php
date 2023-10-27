@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\User\ProfileController AS UserProfile;
 use App\Http\Controllers\User\MeetingController AS UserMeeting;
 use App\Http\Controllers\User\MeetingParticipantController AS UserMeetingPart;
 use App\Http\Controllers\Admin\SchoolController AS AdminSchool;
@@ -46,9 +47,14 @@ Route::prefix('admin')->middleware('auth')->group(function() {
 });
 
 Route::prefix('u')->middleware('auth')->group(function() {
+    Route::get('profile', [UserProfile::class, 'me'])->name('user.profile.me')->middleware('role:user');
+    Route::get('profile/edit', [UserProfile::class, 'edit'])->name('user.profile.edit')->middleware('role:user');
+    Route::post('profile/update', [UserProfile::class, 'update'])->name('user.profile.update')->middleware('role:user');
     Route::get('meetings', [UserMeeting::class, 'index'])->name('user.meetings.index')->middleware('role:user');
     Route::get('my-meetings', [UserMeeting::class, 'my_index'])->name('user.meetings.myindex')->middleware('role:user');
+    Route::get('engaged-meetings', [UserMeeting::class, 'engaged'])->name('user.meetings.engaged')->middleware('role:user');
     Route::get('meetings/{id}', [UserMeeting::class, 'show'])->name('user.meetings.show')->middleware('role:user');
     Route::post('meetings/{id}/join', [UserMeetingPart::class, 'store'])->name('user.meetings.join')->middleware('role:user');
+    Route::put('meetings/{id}/attendance', [UserMeetingPart::class, 'update'])->name('user.meetings.attendance')->middleware('role:user');
     Route::delete('meetings/{id}/leave', [UserMeetingPart::class, 'destroy'])->name('user.meetings.leave')->middleware('role:user');
 });

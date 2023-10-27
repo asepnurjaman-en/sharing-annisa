@@ -27,6 +27,20 @@ class MeetingParticipantController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $meeting = MeetingParticipant::where('meeting_id', $id)->where('student_id', Auth::user()->student->id)->where('attendance', 0);
+        $request->validate([
+            'meeting' => 'required'
+        ]);
+        $meeting->update(['attendance'=>1]);
+
+        return redirect()->back();
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)

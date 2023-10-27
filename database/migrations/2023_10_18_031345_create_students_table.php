@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name', 150);
             $table->enum('gender', ['m','f'])->default('m');
-            $table->string('photo', 250)->nullable();
+            $table->string('profile_picture', 250)->nullable();
+            $table->string('background_picture', 250)->nullable();
             $table->unsignedBigInteger('school_id');
             $table->unsignedBigInteger('account_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();

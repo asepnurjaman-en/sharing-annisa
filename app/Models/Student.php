@@ -31,4 +31,9 @@ class Student extends Model
     {
         return $this->hasMany(MeetingParticipant::class, 'student_id');
     }
+
+    public function account() : BelongsTo
+    {
+        return $this->belongsTo(User::class, 'account_id');
+    }
 }

@@ -1,7 +1,8 @@
 import React from "react";
 import { Link, usePage } from "@inertiajs/inertia-react";
 import PerfectScrollbar from "perfect-scrollbar";
-import { FiUsers, FiUserCheck, FiInbox, FiCast, FiMonitor } from "react-icons/fi";
+import { FiUsers, FiInbox, FiMonitor } from "react-icons/fi";
+import { FaCalendarWeek, FaCalendarDay, FaCalendarDays } from "react-icons/fa6";
 import { FcApproval } from "react-icons/fc";
 import { VscGithubInverted } from "react-icons/vsc";
 
@@ -52,7 +53,7 @@ function Sidebar({ route }) {
 									<li className="nav-item">
 										<Link className={ `nav-link ` + ((['meetings.index','meetings.create','meetings.show','meetings.edit'].includes(route)) ? `active` : null) } href="/admin/meetings/">
 											<div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-												<FiCast className="text-primary"/>
+												<FaCalendarDays className="text-primary"/>
 											</div>
 											<span className="nav-link-text ms-1">Meetings</span>
 										</Link>
@@ -83,15 +84,23 @@ function Sidebar({ route }) {
 										<li className="nav-item">
 											<Link className={ `nav-link ` + ((['user.meetings.myindex'].includes(route)) ? `active` : null) } href="/u/my-meetings/">
 												<div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-													<FiUserCheck className="text-primary"/>
+													<FaCalendarDay className="text-primary"/>
 												</div>
 												<span className="nav-link-text ms-1">My Meets</span>
 											</Link>
 										</li>
 										<li className="nav-item">
+											<Link className={ `nav-link ` + ((['user.meetings.engaged'].includes(route)) ? `active` : null) } href="/u/engaged-meetings/">
+												<div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+													<FaCalendarWeek className="text-primary"/>
+												</div>
+												<span className="nav-link-text ms-1">Engaged Meets</span>
+											</Link>
+										</li>
+										<li className="nav-item">
 											<Link className={ `nav-link ` + ((['user.meetings.index','user.meetings.show'].includes(route)) ? `active` : null) } href="/u/meetings/">
 												<div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-													<FiCast className="text-primary"/>
+													<FaCalendarDays className="text-primary"/>
 												</div>
 												<span className="nav-link-text ms-1">Meetings</span>
 											</Link>

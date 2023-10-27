@@ -8,6 +8,36 @@
     object-fit: cover;
     -o-object-fit: cover; }
 
+.avatar-change {
+    margin: 0;
+    width: 30px;
+    height: 30px;
+    padding: .25em .7em;
+    position: absolute;
+        bottom: 0;
+        right: .75em;
+    z-index: 5; }
+.background-change {
+    margin: 0;
+    width: 25px;
+    height: 25px;
+    padding: .15em .5em;
+    position: absolute;
+        bottom: .25em;
+        right: .25em;
+    z-index: 5; }
+    .avatar-change:hover,
+    .background-change:hover {
+        cursor: pointer;
+        color: var(--bs-primary); }
+    .avatar-change > input[type=file],
+    .background-change > input[type=file] {
+        opacity: 0;
+        transform: scale(0,0);
+        -ms-transform: scale(0,0);
+        appearance: none;
+        -ms-progress-appearance: none; }
+
 /* re apply */
 .choices__inner {
     background-color: unset!important;

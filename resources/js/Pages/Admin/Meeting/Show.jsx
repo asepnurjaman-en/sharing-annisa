@@ -188,7 +188,7 @@ export default function ShowMeeting({ meeting, students, session, errors, curren
 													<FiUsers className="fs-4" />
 												</div>
 												<div className="name ps-3">
-													<span className="fs-3">0</span>
+													<span className="fs-3">{meeting.participants_count}</span>
 													<div className="stats">
 														<small>Participants registered</small>
 													</div>
@@ -201,7 +201,7 @@ export default function ShowMeeting({ meeting, students, session, errors, curren
 													<FiUserCheck className="fs-4" />
 												</div>
 												<div className="name ps-3">
-													<span className="fs-3">0</span>
+													<span className="fs-3">{meeting.attended_count}</span>
 													<div className="stats">
 														<small>Participants confirmed</small>
 													</div>

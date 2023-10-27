@@ -68,7 +68,9 @@ class MeetingController extends Controller
     {
         $meeting = Meeting::whereId($id)->with('subjects')->with(['actors' => function($query) {
             $query->with('student');
-        }])->firstOrFail();
+        }])->withCount(['participants as attended_count' => function($query) {
+            $query->where('attendance', 1);
+        }])->withCount('participants')->firstOrFail();
         $meeting->formatted_start = $meeting->start->isoFormat('dddd, D MMMM Y');
         $meeting->formatted_end = $meeting->until->isoFormat('dddd, D MMMM Y');
         $meeting->formatted_date = $meeting->created_at->isoFormat('dddd, D MMMM Y');

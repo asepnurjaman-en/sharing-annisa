@@ -40,6 +40,22 @@ class Meeting extends Model
         return $this->hasMany(MeetingParticipant::class, 'meeting_id');
     }
 
+    public function scopeParticipate($query)
+    {
+        $query->whereHas('participants', function ($sub_query) {
+            $sub_query->where('student_id', Auth::user()->student->id);
+        });
+    }
+
+    public function scopeEngaged($query)
+    {
+        $query->whereHas('actors', function ($sub_query) {
+            $sub_query->where('student_id', Auth::user()->student->id);
+        })->with(['actors' => function ($sub_query) {
+            $sub_query->where('student_id', Auth::user()->student->id);
+        }]);
+    }
+
     public function scopeOngoing($query)
     {
         return $query->whereDate('start', '<=', now())->whereDate('until', '>=', now());

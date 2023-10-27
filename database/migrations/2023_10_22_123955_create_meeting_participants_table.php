@@ -16,6 +16,7 @@ return new class extends Migration
             $table->enum('status', ['waiting', 'approved', 'rejected'])->default('waiting');
             $table->unsignedBigInteger('meeting_id');
             $table->unsignedBigInteger('student_id');
+            $table->boolean('attendance')->default(false);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();

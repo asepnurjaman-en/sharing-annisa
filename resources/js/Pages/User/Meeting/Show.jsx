@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 export default function ShowMeeting({ meeting, session, current_route }) {
 	const breadcrumb = [
 		{
-			url: `/home`,
+			url: `/dashboard`,
 			text: `Dashboard`
 		},
 		{
@@ -78,7 +78,31 @@ export default function ShowMeeting({ meeting, session, current_route }) {
 				Inertia.delete(`/u/meetings/${meeting.id}/leave`);
 			}
 		});
-		};
+	};
+	const attendanceMeeting = async (e, id) => {
+		e.preventDefault();
+		Inertia.put(`/u/meetings/${id}/attendance`, {
+			meeting: id,
+		},{
+			onError: (error) => {
+				Swal.fire({
+					icon: 'error',
+					title: `Fail to attendance`,
+					html: error.meeting
+				});
+			},
+			onProgress: () => {
+				console.log('loading');
+			},
+			onSuccess: (response) => {
+				Swal.fire({
+					icon: 'success',
+					title: 'Meet attended.',
+					html: '<b>We were so thanksfully</b> for your participantions'
+				});
+			}
+		});
+	};
 	const CountComplete = () => <div className="border rounded text-success text-center py-4">You are good to go!</div>;
 	useEffect(() => {
 	}), [];
@@ -162,7 +186,7 @@ export default function ShowMeeting({ meeting, session, current_route }) {
 													<FiUserCheck className="fs-4" />
 												</div>
 												<div className="name ps-3">
-													<span className="fs-3">0</span>
+													<span className="fs-3">{meeting.attended_count}</span>
 													<div className="stats">
 														<small>Attendance confirmed</small>
 													</div>
@@ -188,7 +212,7 @@ export default function ShowMeeting({ meeting, session, current_route }) {
 												<div className="col-6 col-md-4 col-lg-2" key={index}>
 													<div className="card card-body shadow-lg text-center p-2 mb-3">
 														<div className="mt-n2 mt-lg-n4 mb-4 mb-lg-2">
-															<img src="/icons/inertia.png" className="d-block icon-lg rounded-circle img-fluid border border-2 border-white m-auto"/>
+															<img src={`/storage/${item.student.profile_picture}`} className="d-block icon-lg rounded-circle object-cover img-fluid border border-2 border-white m-auto"/>
 														</div>
 														<span className="d-block fw-bold">{item.student.name}</span>
 														<span className="opacity-5 text-sm">{item.stakeholder}</span>
@@ -250,10 +274,23 @@ export default function ShowMeeting({ meeting, session, current_route }) {
 						}
 						{ meeting.status=='ongoing' && 
 						<div className="card-footer border-top">
-							<Link onClick={(e) => joinMeeting(e, meeting.id)} className="d-flex align-items-center justify-content-center btn bg-gradient-primary text-xs w-100 mb-0" data-bs-toggle="tooltip" title="Join meeting">
-								<FiUserCheck className="me-1"/>
-								<span className="d-none d-lg-inline">Attendance Confirmation </span>
-							</Link>
+							{(function() {
+								if (meeting.participants.length > 0) {
+									if (meeting.participants[0].attendance == 0) {
+										return <Link onClick={(e) => attendanceMeeting(e, meeting.id)} className="d-flex align-items-center justify-content-center btn bg-gradient-primary text-xs w-100 mb-0" data-bs-toggle="tooltip" title="Join meeting">
+													<FiUserCheck className="me-1"/>
+													<span className="d-none d-lg-inline">Attendance Confirmation </span>
+												</Link>;
+									} else if (meeting.participants[0].attendance == 1) {
+										return <Link className="d-flex align-items-center justify-content-center btn bg-gradient-primary text-xs w-100 disabled mb-0" data-bs-toggle="tooltip" title="Join meeting">
+													<FiUserCheck className="me-1"/>
+													<span className="d-none d-lg-inline">Attended </span>
+												</Link>;
+									}
+								} else {
+									return <div className="text-danger text-center">You`re not participated as participants</div>;
+								}
+						})()}
 						</div>
 						}
 					</div>

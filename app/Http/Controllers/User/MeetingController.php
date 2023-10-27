@@ -37,9 +37,7 @@ class MeetingController extends Controller
      */
     public function my_index()
     {
-        $meetings = Meeting::whereHas('participants', function($query) {
-            $query->where('student_id', Auth::user()->student->id);
-        })->orderBy('start', 'asc')->get();
+        $meetings = Meeting::participate()->orderBy('start', 'asc')->get();
         $meetings->map(function ($meeting) {
             $meeting->formatted_coming = $meeting->start->diffForHumans();
             $meeting->formatted_start = $meeting->start->isoFormat('DD/MM/Y');
@@ -55,6 +53,26 @@ class MeetingController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     */
+    public function engaged()
+    {
+        $meetings = Meeting::engaged()->orderBy('start', 'asc')->get();
+        $meetings->map(function ($meeting) {
+            $meeting->formatted_coming = $meeting->start->diffForHumans();
+            $meeting->formatted_start = $meeting->start->isoFormat('DD/MM/Y');
+            $meeting->formatted_until = $meeting->until->isoFormat('DD/MM/Y');
+            unset($meeting->start);
+            unset($meeting->until);
+        });
+
+        return inertia('User/Meeting/Engaged', [
+            'meetings' => $meetings,
+            'current_route' => Route::currentRouteName()
+        ]);
+    }
+
+    /**
      * Display the specified resource.
      */
     public function show(string $id)
@@ -63,6 +81,8 @@ class MeetingController extends Controller
             $query->with('student');
         }])->with(['participants' => function($query) {
             $query->where('student_id', Auth::user()->student->id);
+        }])->withCount(['participants as attended_count' => function($query) {
+            $query->where('attendance', 1);
         }])->withCount('participants')->firstOrFail();
         $meeting->formatted_start = $meeting->start->isoFormat('dddd, D MMMM Y');
         $meeting->formatted_end = $meeting->until->isoFormat('dddd, D MMMM Y');
