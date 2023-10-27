@@ -4,17 +4,17 @@
 
 Website using for manage meeting schedule.
 
-- Laravel v10.28.0 (PHP v8.1.16)
+- [Laravel v10.28.0](https://laravel.com/docs) (PHP v8.1.16)
 - [Inertiajs v0.6.10](https://inertiajs.com/)
 - React 17.0.2
 
-## Learning Laravel
+## How to install
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+<blockquote>
+    <ol>
+        <li>First clone with this command <code>git clone https://github.com/asepnurjaman-en/sharing-annisa</code></li>
+    </ol>
+</blockquote>
 
 ## License
 
